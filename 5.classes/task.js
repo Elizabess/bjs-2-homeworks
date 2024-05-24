@@ -26,36 +26,64 @@ class PrintEditionItem {
     }
 }
 
+class Magazine extends PrintEditionItem {
+  constructor(name, releaseDate, pagesCount) {
+    super(name, releaseDate, pagesCount);
+    this.type = "magazine";
+  }
+}
+
+class Book extends PrintEditionItem {
+  constructor(name, releaseDate, pagesCount, author) {
+    super(name, releaseDate, pagesCount);
+    this.author = author;
+    this.type = "book";
+  }
+}
+
+class NovelBook extends Book {
+  constructor(name, releaseDate, pagesCount, author) {
+    super(name, releaseDate, pagesCount);
+    this.type = "novel";
+  }
+}
+
+class FantasticBook extends Book {
+  constructor(name, releaseDate, pagesCount, author) {
+    super(name, releaseDate, pagesCount);
+    this.type = "fantastic";
+  }
+}
+
+class DetectivBook extends Book {
+  constructor(name, releaseDate, pagesCount, author) {
+    super(name, releaseDate, pagesCount);
+    this.type = "detective";
+  }
+}
+
 class Library {
-    constructor(name) {
-      this.name = name;
-      this.books = [];
-    }
+  constructor(name) {
+    this.name = name;
+    this.books = [];
+  }
   
-    addBook(book) {
-      if (book.state > 30) {
-        this.books.push(book);
-      }
+  addBook(book) {
+    if (book.state > 30) {
+      this.books.push(book);
     }
+  }
   
-    findBookBy(type, value) {
-      for (let book of this.books) {
-        if (book[type] === value) {
-          return book;
-        }
-      }
-      return null;
-    }
+  findBookBy(type, value) {
+    const findResult = this.books.find((item) => item[type] === value);
+    return findResult;
+  }
   
-    giveBookByName(bookName) {
-      for (let i = 0; i < this.books.length; i++) {
-        if (this.books[i].name === bookName) {
-          const book = this.books[i];
-          this.books.splice(i, 1);
-          return book;
-        }
-      }
-      return null;
-    }
+  giveBookByName(bookName) {
+    const book = this.findBookBy("name", bookName);
+    if (!book) return null;
+    this.books = this.books.filter((item) => item.name !== bookName);
+    return book;
+  }
 }
 
